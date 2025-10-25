@@ -3,38 +3,131 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AudioButton } from "@/components/AudioButton";
+import { LocationPermissionDialog } from "@/components/LocationPermissionDialog";
+import { DistrictConfirmDialog } from "@/components/DistrictConfirmDialog";
+import { detectLocation, reverseGeocode, fallbackToIP, shouldAutoAccept } from "@/utils/geolocation";
+import { toast } from "sonner";
 
 const Welcome = () => {
   const navigate = useNavigate();
   const [detecting, setDetecting] = useState(false);
+  const [showPermissionDialog, setShowPermissionDialog] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [nearbyDistricts, setNearbyDistricts] = useState<any[]>([]);
+  const [detectionAccuracy, setDetectionAccuracy] = useState<number>();
 
   const handleAutoDetect = () => {
+    setShowPermissionDialog(true);
+  };
+
+  const handlePermissionAllow = async () => {
+    setShowPermissionDialog(false);
     setDetecting(true);
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          // In production, this would call reverse geocoding API
-          console.log("Location:", position.coords);
-          // For demo, navigate to first district
-          setTimeout(() => {
-            setDetecting(false);
-            navigate("/dashboard/1");
-          }, 1500);
+
+    try {
+      // Step 1: Get high-accuracy location
+      const location = await detectLocation();
+      setDetectionAccuracy(location.accuracy);
+
+      toast.success(`Location detected with ${Math.round(location.accuracy)}m accuracy`, {
+        description: `Method: ${location.method}`,
+      });
+
+      // Step 2: Reverse geocode to find district
+      const result = await reverseGeocode(location.latitude, location.longitude);
+
+      // Log detection for debugging
+      console.log('Detection result:', {
+        timestamp: new Date().toISOString(),
+        coords: { lat: location.latitude, lon: location.longitude, accuracy: location.accuracy },
+        method: location.method,
+        result: {
+          district_id: result.district_id,
+          district_name: result.district_name,
+          containment: result.containment,
+          distance_m: result.distance_m,
         },
-        (error) => {
-          console.error("Location error:", error);
+      });
+
+      // Step 3: Decide whether to auto-accept or show confirmation
+      if (shouldAutoAccept(result, location.accuracy)) {
+        // High confidence - navigate directly
+        toast.success(`जिला मिल गया: ${result.district_name}`, {
+          description: 'District detected successfully',
+        });
+        setTimeout(() => {
           setDetecting(false);
+          navigate(`/dashboard/${result.district_id}`);
+        }, 1000);
+      } else {
+        // Low confidence - show nearby districts for confirmation
+        setNearbyDistricts(result.candidates);
+        setDetecting(false);
+        setShowConfirmDialog(true);
+      }
+    } catch (error: any) {
+      console.error('Geolocation failed:', error);
+      setDetecting(false);
+
+      // Fallback to IP-based detection
+      if (error.code === 1) {
+        // Permission denied
+        toast.error('Location permission denied', {
+          description: 'Please choose your district manually',
+        });
+        navigate("/select");
+      } else {
+        // Timeout or other error - try IP fallback
+        toast.info('Trying alternative method...', {
+          description: 'GPS unavailable, using IP location',
+        });
+        
+        try {
+          const ipResult = await fallbackToIP();
+          setNearbyDistricts(ipResult.candidates);
+          setShowConfirmDialog(true);
+        } catch {
+          toast.error('Could not detect location', {
+            description: 'Please choose manually',
+          });
           navigate("/select");
         }
-      );
-    } else {
-      setDetecting(false);
-      navigate("/select");
+      }
     }
   };
 
+  const handleConfirmDistrict = (districtId: number) => {
+    setShowConfirmDialog(false);
+    navigate(`/dashboard/${districtId}`);
+  };
+
+  const handleManualSelection = () => {
+    setShowPermissionDialog(false);
+    setShowConfirmDialog(false);
+    navigate("/select");
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center p-4">
+    <>
+      {/* Permission Dialog */}
+      {showPermissionDialog && (
+        <LocationPermissionDialog
+          onAllow={handlePermissionAllow}
+          onManual={handleManualSelection}
+        />
+      )}
+
+      {/* Confirmation Dialog */}
+      {showConfirmDialog && (
+        <DistrictConfirmDialog
+          nearbyDistricts={nearbyDistricts}
+          accuracy={detectionAccuracy}
+          onConfirm={handleConfirmDistrict}
+          onManual={handleManualSelection}
+        />
+      )}
+
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full space-y-8 text-center">
         {/* Logo/Header */}
         <div className="space-y-4">
@@ -114,6 +207,7 @@ const Welcome = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
