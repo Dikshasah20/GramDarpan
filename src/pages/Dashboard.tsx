@@ -40,8 +40,8 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background pb-8">
       {/* Header */}
-      <div className="bg-primary text-primary-foreground p-6 sticky top-0 z-10 shadow-md">
-        <div className="max-w-6xl mx-auto">
+      <div className="gradient-header text-primary-foreground p-6 sticky top-0 z-10 shadow-card">
+        <div className="max-w-6xl mx-auto tricolor-accent">
           <Button
             variant="ghost"
             size="icon"
@@ -141,7 +141,7 @@ const Dashboard = () => {
         </div>
 
         {/* Trends Chart */}
-        <Card className="p-6">
+        <Card className="p-6 shadow-card border border-border/50">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl font-bold text-foreground flex items-center gap-3">
@@ -192,7 +192,7 @@ const Dashboard = () => {
         </Card>
 
         {/* Help Section */}
-        <Card className="p-6 bg-muted/50">
+        <Card className="p-6 bg-secondary shadow-card border border-border/50">
           <h2 className="text-2xl font-bold text-foreground mb-4">
             मदद और अधिकार
           </h2>
@@ -200,7 +200,7 @@ const Dashboard = () => {
           
           <div className="space-y-4">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
                 <span className="text-2xl">📞</span>
               </div>
               <div>
@@ -210,7 +210,7 @@ const Dashboard = () => {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
                 <span className="text-2xl">📝</span>
               </div>
               <div>
@@ -223,7 +223,7 @@ const Dashboard = () => {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
                 <span className="text-2xl">📄</span>
               </div>
               <div>

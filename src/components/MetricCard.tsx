@@ -29,10 +29,10 @@ export const MetricCard = ({
   };
 
   return (
-    <Card className={cn("p-6 hover:shadow-lg transition-all duration-300", trend && trendColors[trend], className)}>
+    <Card className={cn("p-6 shadow-card hover:shadow-card-hover transition-all duration-300 border border-border/50", trend && trendColors[trend], className)}>
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-primary/10">
+          <div className="p-3 rounded-xl bg-secondary">
             <Icon className="h-8 w-8 text-primary" />
           </div>
           <div>

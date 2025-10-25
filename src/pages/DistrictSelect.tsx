@@ -28,7 +28,7 @@ const DistrictSelect = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-primary text-primary-foreground p-6 sticky top-0 z-10 shadow-md">
+      <div className="gradient-header text-primary-foreground p-6 sticky top-0 z-10 shadow-card">
         <div className="max-w-4xl mx-auto">
           <Button
             variant="ghost"
@@ -67,7 +67,7 @@ const DistrictSelect = () => {
                 {districts.map((district) => (
                   <Card
                     key={district.id}
-                    className="p-4 hover:shadow-md transition-all cursor-pointer"
+                    className="p-4 shadow-card hover:shadow-card-hover transition-all cursor-pointer border border-border/50"
                     onClick={() => navigate(`/dashboard/${district.id}`)}
                   >
                     <div className="flex items-center justify-between">

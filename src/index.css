@@ -8,39 +8,52 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 42 47% 95%;
-    --foreground: 25 25% 15%;
+    --background: 0 0% 100%;
+    --foreground: 217 77% 16%;
 
     --card: 0 0% 100%;
-    --card-foreground: 25 25% 15%;
+    --card-foreground: 217 77% 16%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 25 25% 15%;
+    --popover-foreground: 217 77% 16%;
 
-    --primary: 142 76% 36%;
+    --primary: 217 98% 53%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 28 80% 52%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 209 73% 95%;
+    --secondary-foreground: 217 77% 16%;
 
-    --muted: 42 30% 85%;
-    --muted-foreground: 25 15% 45%;
+    --muted: 209 73% 95%;
+    --muted-foreground: 217 50% 45%;
 
-    --accent: 28 80% 52%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 44 88% 61%;
+    --accent-foreground: 217 77% 16%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 42 30% 82%;
-    --input: 42 30% 82%;
-    --ring: 142 76% 36%;
+    --border: 217 50% 88%;
+    --input: 217 50% 88%;
+    --ring: 217 98% 53%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
     
     --success: 142 76% 36%;
-    --warning: 28 80% 52%;
+    --warning: 44 88% 61%;
     --danger: 0 72% 51%;
+    
+    /* Government blue gradient */
+    --gradient-primary: linear-gradient(135deg, hsl(217, 100%, 34%), hsl(209, 100%, 50%));
+    --gradient-header: linear-gradient(180deg, hsl(217, 100%, 34%), hsl(217, 98%, 53%));
+    
+    /* Shadows for depth */
+    --shadow-card: 0 2px 8px rgba(13, 110, 253, 0.08);
+    --shadow-card-hover: 0 4px 16px rgba(13, 110, 253, 0.12);
+    
+    /* Tricolor accent */
+    --tricolor-saffron: 28 100% 53%;
+    --tricolor-green: 142 76% 36%;
+    --tricolor-white: 0 0% 100%;
 
     --sidebar-background: 0 0% 98%;
 
@@ -60,37 +73,43 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 25 25% 12%;
-    --foreground: 42 47% 95%;
+    --background: 217 77% 8%;
+    --foreground: 209 73% 95%;
 
-    --card: 25 25% 15%;
-    --card-foreground: 42 47% 95%;
+    --card: 217 70% 12%;
+    --card-foreground: 209 73% 95%;
 
-    --popover: 25 25% 15%;
-    --popover-foreground: 42 47% 95%;
+    --popover: 217 70% 12%;
+    --popover-foreground: 209 73% 95%;
 
-    --primary: 142 76% 36%;
+    --primary: 217 98% 53%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 28 80% 52%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 217 50% 20%;
+    --secondary-foreground: 209 73% 95%;
 
-    --muted: 25 15% 25%;
-    --muted-foreground: 42 30% 65%;
+    --muted: 217 50% 20%;
+    --muted-foreground: 217 30% 65%;
 
-    --accent: 28 80% 52%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 44 88% 61%;
+    --accent-foreground: 217 77% 16%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 25 15% 25%;
-    --input: 25 15% 25%;
-    --ring: 142 76% 36%;
+    --border: 217 50% 20%;
+    --input: 217 50% 20%;
+    --ring: 217 98% 53%;
     
     --success: 142 76% 36%;
-    --warning: 28 80% 52%;
+    --warning: 44 88% 61%;
     --danger: 0 72% 51%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(217, 100%, 34%), hsl(209, 100%, 50%));
+    --gradient-header: linear-gradient(180deg, hsl(217, 100%, 34%), hsl(217, 98%, 53%));
+    
+    --shadow-card: 0 2px 8px rgba(13, 110, 253, 0.15);
+    --shadow-card-hover: 0 4px 16px rgba(13, 110, 253, 0.25);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -109,5 +128,37 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  /* High contrast for accessibility */
+  @media (prefers-contrast: high) {
+    :root {
+      --foreground: 217 100% 10%;
+      --border: 217 80% 70%;
+    }
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-header {
+    background: var(--gradient-header);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .shadow-card-hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+  
+  .tricolor-accent {
+    border-top: 3px solid hsl(var(--tricolor-saffron));
+    border-bottom: 3px solid hsl(var(--tricolor-green));
   }
 }

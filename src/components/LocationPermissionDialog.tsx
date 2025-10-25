@@ -11,10 +11,10 @@ interface LocationPermissionDialogProps {
 export const LocationPermissionDialog = ({ onAllow, onManual }: LocationPermissionDialogProps) => {
   return (
     <div className="fixed inset-0 bg-background/95 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <Card className="max-w-2xl w-full p-8 space-y-6">
+      <Card className="max-w-2xl w-full p-8 space-y-6 shadow-card-hover border-2 border-primary/20">
         {/* Icon */}
         <div className="flex justify-center">
-          <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+          <div className="w-20 h-20 rounded-full bg-secondary shadow-card flex items-center justify-center">
             <Navigation className="h-10 w-10 text-primary" />
           </div>
         </div>
@@ -30,7 +30,7 @@ export const LocationPermissionDialog = ({ onAllow, onManual }: LocationPermissi
         </div>
 
         {/* Explanation - Hindi */}
-        <div className="space-y-4 bg-muted/50 p-6 rounded-xl">
+        <div className="space-y-4 bg-secondary p-6 rounded-xl border border-border/50">
           <div className="flex items-start gap-3">
             <AudioButton 
               text="अपना जिला ऑटो-डिटेक्ट करने के लिए लोकेशन की जरूरत है। कृपया अलाउ करें। सिर्फ आपके डिवाइस का करंट लोकेशन ही इस्तेमाल होगा। अगर आप मना करते हैं, तो आप मैन्युअली भी डिस्ट्रिक्ट चुन सकते हैं।"
@@ -65,7 +65,7 @@ export const LocationPermissionDialog = ({ onAllow, onManual }: LocationPermissi
           <Button
             onClick={onAllow}
             size="lg"
-            className="w-full h-14 text-xl font-semibold rounded-xl"
+            className="w-full h-14 text-xl font-semibold rounded-xl gradient-primary shadow-card hover:shadow-card-hover"
           >
             <Navigation className="mr-3 h-6 w-6" />
             Location Allow करें

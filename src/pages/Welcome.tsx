@@ -127,11 +127,11 @@ const Welcome = () => {
         />
       )}
 
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-2xl w-full space-y-8 text-center">
         {/* Logo/Header */}
         <div className="space-y-4">
-          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 mb-6">
+          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-secondary mb-6 shadow-card">
             <MapPin className="h-12 w-12 text-primary" />
           </div>
           <h1 className="text-5xl font-bold text-foreground">
@@ -149,10 +149,10 @@ const Welcome = () => {
         </div>
 
         {/* Description */}
-        <div className="bg-card rounded-2xl p-8 shadow-lg space-y-4">
-          <p className="text-xl text-card-foreground leading-relaxed">
+        <div className="bg-card rounded-2xl p-8 shadow-card-hover border border-border/50 space-y-4">
+          <p className="text-xl text-card-foreground leading-relaxed font-semibold">
             अपने जिले का प्रदर्शन देखें<br />
-            <span className="text-lg text-muted-foreground">
+            <span className="text-lg font-normal text-muted-foreground">
               View your district's performance
             </span>
           </p>
@@ -168,7 +168,7 @@ const Welcome = () => {
             onClick={handleAutoDetect}
             disabled={detecting}
             size="lg"
-            className="w-full h-16 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all"
+            className="w-full h-16 text-xl font-semibold rounded-2xl shadow-card hover:shadow-card-hover transition-all gradient-primary"
           >
             <MapPin className="mr-3 h-6 w-6" />
             {detecting ? "खोज रहे हैं..." : "अपना जिला खोजें"}
@@ -202,8 +202,10 @@ const Welcome = () => {
 
         {/* Footer */}
         <div className="pt-8 text-sm text-muted-foreground">
-          <p>सरकारी जानकारी • आसान भाषा में</p>
-          <p className="text-xs mt-1">Government information in simple language</p>
+          <div className="tricolor-accent py-4">
+            <p className="font-medium">सरकारी जानकारी • आसान भाषा में</p>
+            <p className="text-xs mt-1">Government information in simple language</p>
+          </div>
         </div>
       </div>
     </div>

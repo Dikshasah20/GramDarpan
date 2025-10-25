@@ -30,11 +30,11 @@ export const DistrictConfirmDialog = ({
 
   return (
     <div className="fixed inset-0 bg-background/95 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <Card className="max-w-2xl w-full p-8 space-y-6">
+      <Card className="max-w-2xl w-full p-8 space-y-6 shadow-card-hover border-2 border-accent/20">
         {/* Icon */}
         <div className="flex justify-center">
-          <div className="w-20 h-20 rounded-full bg-warning/10 flex items-center justify-center">
-            <MapPin className="h-10 w-10 text-warning" />
+          <div className="w-20 h-20 rounded-full bg-accent/20 shadow-card flex items-center justify-center">
+            <MapPin className="h-10 w-10 text-accent" />
           </div>
         </div>
 
@@ -49,7 +49,7 @@ export const DistrictConfirmDialog = ({
         </div>
 
         {/* Explanation */}
-        <div className="space-y-4 bg-muted/50 p-6 rounded-xl">
+        <div className="space-y-4 bg-secondary p-6 rounded-xl border border-border/50">
           <div className="flex items-start gap-3">
             <AudioButton 
               text={`हमें आपका नतीजा मिल गया, लेकिन पूर्ण निश्चित नहीं है। कृपया अपना जिला चुनें। ${topDistrict.district_name}, दूरी ${formatDistance(topDistrict.distance_m)}`}
@@ -78,15 +78,15 @@ export const DistrictConfirmDialog = ({
           {nearbyDistricts.slice(0, 3).map((district, index) => (
             <Card
               key={district.id}
-              className={`p-4 cursor-pointer hover:shadow-md transition-all ${
-                index === 0 ? 'border-2 border-primary' : ''
+              className={`p-4 cursor-pointer shadow-card hover:shadow-card-hover transition-all ${
+                index === 0 ? 'border-2 border-primary bg-secondary' : 'border border-border/50'
               }`}
               onClick={() => onConfirm(district.id)}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   {index === 0 && (
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
                       <CheckCircle className="h-6 w-6 text-primary" />
                     </div>
                   )}
